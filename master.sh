@@ -6,7 +6,9 @@
 #                                                                             #
 #   AUTHOR: REMI MONTROTY                                   Jun 17   2016     #
 #                                                                             #
-#   VERSION :								      #
+#   VERSION :	
+#	* v1.0.1: 20160623						      # 
+#		-	Add: INDS0250, INDS0100 & all correct BBOXes				      #
 #	* v1.0.0: 20160617						      # 
 #		-	Init: empty skeleton with the following modes:
 #           FRMAX_MODE
@@ -47,28 +49,44 @@ function set_model_options() {
 	
 	case $GRID in
 		JAVA0030)	 
-			BBOX="-10.0 105.0 -4.0 120.0"
+			BBOX="-9.3 105.2 -4.56 117.2"
 			RESOLUTION="0.03"
 			FRMAX="72"
 			FRINT="1"
 			FRLIST_FULL=`seq 0 $FRINT $FRMAX`
 		;;
 		SEA0300)	 
-			#BBOX="-10.0 105.0 -4.0 120.0"
+			BBOX="-25.0 70.0 25.0 170.0"
 			RESOLUTION="0.3"
 			FRMAX="120"
 			FRINT="3"
 			FRLIST_FULL=`seq 0 $FRINT $FRMAX`
 		;;
 		INDX0100)	 
-		#	BBOX="-10.0 105.0 -4.0 120.0"
+			BBOX="-16.2 90.0 15.5 150.0"
 			RESOLUTION="0.1"
 			FRMAX="120"
 			FRINT="1"
 			FRLIST_FULL=`seq 0 $FRINT $FRMAX`
 		;;
+ 		INDS0250)	 
+            # LAT_S LON_W LAT_N LAT_E
+			BBOX="-15.0 95.0 15.0 150.0"
+			RESOLUTION="0.25"
+			FRMAX="72"
+			FRINT="3"
+			FRLIST_FULL=`seq 0 $FRINT $FRMAX`
+		;;        
+ 		INDS0100)	 
+            # LAT_S LON_W LAT_N LAT_E
+			BBOX="-15.0 95.0 15.0 150.0"
+			RESOLUTION="0.1"
+			FRMAX="72"
+			FRINT="3"
+			FRLIST_FULL=`seq 0 $FRINT $FRMAX`
+		;;          
  		INDX0110)	 
-		#	BBOX="-10.0 105.0 -4.0 120.0"
+			BBOX="-30.0 80.0 17.0 160.0"
 			RESOLUTION="0.11"
 			FRMAX="144"
 			FRINT="3"
@@ -76,21 +94,23 @@ function set_model_options() {
 		;;       
 		SEA0125)	 
 			#BBOX="-10.0 105.0 -4.0 120.0"
+			BBOX="-25.0 70.0 -40.0 170.0"      
 			RESOLUTION="0.125"
 			FRMAX="192"
 			FRINT="3"
 			FRLIST_FULL=`seq 0 $FRINT $FRMAX`
 		;;
  		SEA0500)	 
-			#BBOX="-10.0 105.0 -4.0 120.0"
+            # LAT_S LON_W LAT_N LAT_E
+			BBOX="-25.0 70.0 40.0 170.0"
 			RESOLUTION="0.5"
 			FRMAX="72"
 			FRINT="3"
 			FRLIST_FULL=`seq 0 $FRINT $FRMAX`
 		;;     
  		GLOB0500)	 
-#			BBOX="-90.0 -180.0 90.0 180.0"
-			BBOX="-90.0 0.0 90.0 360.0"
+			BBOX="-90.0 -180.0 90.0 180.0"
+			#BBOX="-90.0 0.0 90.0 360.0"
             RESOLUTION="0.5"
 			FRMAX="192"
 			FRINT="3"
@@ -104,13 +124,15 @@ function set_model_options() {
 	
 	case $DOMAIN_MODE in
 		SAME)
-			echo "Using the same domains"
+			echo "Using the same specified domain $DOMAIN_SPECIFIED"
+            
 		;;
 		OWN)
 			echo "Model${model_counter} $MODEL is using his own domain/grid $GRID"
 		;;
 		INTERSECT)
 			echo "Model${model_counter} $MODEL is using the common intersection of both domains"
+            OPT_BBOX[$idx]=$BBOX
 		;;
 		*)
 			echo "Missing a DOMAIN_MODE variable. Abort"
