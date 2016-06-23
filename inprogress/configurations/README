@@ -1,0 +1,6 @@
+## All the examples have been taken from this website :
+
+https://martin-thoma.com/configuration-files-in-python/
+
+## and adapted to work on Python3. They also needed the py36venv 
+#  virtualenv so as to work properly.
